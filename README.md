@@ -6,32 +6,29 @@
 > ⚠️ 本リポジトリは学習目的のフォークです。原著作権は 37signals に帰属し、
 > O'Saasy License に従います。SaaSとしての再配布・提供は行いません。
 
-## 目的
-- チュートリアルでは学べない「現場のコード」の設計判断を理解する
-- 自分のコードに取り入れられるパターンを言語化する
+## 📒 学習ノート → [docs/study/](docs/study/README.md)
 
-## 学習の観点
-| 観点 | 着目ポイント | ノート |
-|------|-------------|--------|
-| 設計 | concern によるモデル分割 / CRUD に限定したコントローラー | [ ] docs/architecture.md |
-| テスト | Minitest + fixtures、テスト層の分け方 | [ ] docs/testing.md |
-| セキュリティ | 認証・権限チェック、データスコープの絞り方 | [ ] docs/security.md |
-| コメント・命名 | コメントを最小限にする命名と構造 | [ ] docs/naming.md |
-| リファクタリング | git履歴から設計の変遷を追跡 | [ ] docs/refactoring.md |
+設計・テスト・セキュリティ・リファクタリングの観点で実務コードを分析し、該当コードへのリンク付きでまとめています。
 
-## 進め方
-1. `config/routes.rb` から機能の全体像を把握
-2. 1機能を「ルート → コントローラー → モデル → ビュー → テスト」で縦に追う
-3. `git log` / `git blame` で設計の変遷を確認
-4. 学んだことを docs/ に記録し、自分の言葉でまとめる
+| # | ノート | 内容 |
+|---|--------|------|
+| 0 | [アプリの全体像](docs/study/00-app-overview.md) | どんなアプリか、カードのライフサイクル |
+| 1 | [設計](docs/study/01-architecture.md) | concern によるモデル分割、CRUD に限定したコントローラー、薄いジョブ |
+| 2 | [テスト](docs/study/02-testing.md) | Minitest + fixtures、状態変化を検証する書き方 |
+| 3 | [セキュリティ](docs/study/03-security.md) | データスコープの絞り込み、認証・認可、CI での自動チェック |
+| 4 | [命名・コメント](docs/study/04-naming-and-comments.md) | コメントを最小限にする命名、「なぜ」を書くコメント |
+| 5 | [リファクタリング](docs/study/05-refactoring.md) | git 履歴から設計の変遷を追う |
+| 6 | [サービスの性格と求められる品質](docs/study/06-service-quality-axes.md) | 規模・機密性・影響範囲・規制の4軸で整理 |
+| 7 | [開発環境と構成](docs/study/07-dev-environment.md) | 1サーバー構成、Docker を使わない開発、セットアップのトラブル解決 |
 
-## 学んだこと（随時更新）
-- [ ] 例：〇〇 を Service クラスではなく concern で表現する理由
-- [ ] 例：「閉じる」操作を独立リソースにすることで得られるメリット
+## 主な学び（抜粋）
+- **権限チェックは「後から足す」のではなく「検索の時点で絞る」**：`Current.user.accessible_cards.find_by!` により、書き忘れが構造的に起きない（[詳細](docs/study/03-security.md)）
+- **状態はフラグではなく別テーブルで表す**：「閉じた」を `Closure` レコードで表し、「誰が・いつ」が自然に残る（[詳細](docs/study/01-architecture.md)）
+- **求められる品質は複数の軸で決まる**：規模・機密性・影響範囲・規制によって手続きや設計は変わるが、基本品質は共通（[詳細](docs/study/06-service-quality-axes.md)）
 
 ## 環境
-- Ruby 3.4.8 / Rails 8.2.0.alpha（main ブランチ）
-- ローカルでの起動手順：[ ] 実際に動かしたら記載（公式手順：[Development guide](docs/development.md)）
+- Ruby 3.4.8 / Rails 8.2.0.alpha（main ブランチ）/ SQLite
+- ローカル起動：`bin/setup` → `bin/dev` → http://app.fizzy.localhost:3006 （[手順とトラブル対応](docs/study/07-dev-environment.md)）
 
 ---
 
